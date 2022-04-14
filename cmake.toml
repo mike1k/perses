@@ -1,0 +1,11 @@
+[project]
+name = "perses"
+
+[subdir.vendor]
+
+[target.perses]
+type = "executable"
+sources = ["src/**.cpp", "src/**.hpp"]
+link-libraries = ["spdlog", "Zydis", "asmjit", "argparse", "pepp"]
+compile-features = ["cxx_std_20"]
+compile-definitions = ["NOMINMAX", "ZYCORE_STATIC_BUILD", "ZYDIS_STATIC_BUILD", "ASMJIT_STATIC"]

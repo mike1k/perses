@@ -1,0 +1,125 @@
+#pragma once
+
+namespace perses::x86util
+{
+	static asmjit::x86::Gp getAsmRegAny(ZydisRegister reg)
+	{
+		using namespace asmjit;
+
+		switch (reg)
+		{
+		case ZYDIS_REGISTER_RAX:
+			return x86::regs::rax;
+		case ZYDIS_REGISTER_RBX:
+			return x86::regs::rbx;
+		case ZYDIS_REGISTER_RCX:
+			return x86::regs::rcx;
+		case ZYDIS_REGISTER_RDX:
+			return x86::regs::rdx;
+		case ZYDIS_REGISTER_RSI:
+			return x86::regs::rsi;
+		case ZYDIS_REGISTER_RDI:
+			return x86::regs::rdi;
+		case ZYDIS_REGISTER_RSP:
+			return x86::regs::rsp;
+		case ZYDIS_REGISTER_RBP:
+			return x86::regs::rbp;
+		case ZYDIS_REGISTER_R8:
+			return x86::regs::r8;
+		case ZYDIS_REGISTER_R8D:
+			return x86::regs::r8d;
+		case ZYDIS_REGISTER_R9:
+			return x86::regs::r9;
+		case ZYDIS_REGISTER_R9D:
+			return x86::regs::r9d;
+		case ZYDIS_REGISTER_R10:
+			return x86::regs::r10;
+		case ZYDIS_REGISTER_R10D:
+			return x86::regs::r10d;
+		case ZYDIS_REGISTER_R11:
+			return x86::regs::r11;
+		case ZYDIS_REGISTER_R11D:
+			return x86::regs::r11d;
+		case ZYDIS_REGISTER_R12:
+			return x86::regs::r12;
+		case ZYDIS_REGISTER_R12D:
+			return x86::regs::r12d;
+		case ZYDIS_REGISTER_R12B:
+			return x86::regs::r12b;
+		case ZYDIS_REGISTER_R13:
+			return x86::regs::r13;
+		case ZYDIS_REGISTER_R13B:
+			return x86::regs::r13b;
+		case ZYDIS_REGISTER_R13D:
+			return x86::regs::r13d;
+		case ZYDIS_REGISTER_R14:
+			return x86::regs::r14;
+		case ZYDIS_REGISTER_R14D:
+			return x86::regs::r14d;
+		case ZYDIS_REGISTER_R14B:
+			return x86::regs::r14b;
+		case ZYDIS_REGISTER_R15:
+			return x86::regs::r15;
+		case ZYDIS_REGISTER_R15D:
+			return x86::regs::r15d;
+		case ZYDIS_REGISTER_EAX:
+			return x86::regs::eax;
+		case ZYDIS_REGISTER_EBX:
+			return x86::regs::ebx;
+		case ZYDIS_REGISTER_ECX:
+			return x86::regs::ecx;
+		case ZYDIS_REGISTER_EDX:
+			return x86::regs::edx;
+		case ZYDIS_REGISTER_ESI:
+			return x86::regs::esi;
+		case ZYDIS_REGISTER_EDI:
+			return x86::regs::edi;
+		case ZYDIS_REGISTER_ESP:
+			return x86::regs::esp;
+		case ZYDIS_REGISTER_EBP:
+			return x86::regs::ebp;
+		case ZYDIS_REGISTER_AL:
+			return x86::regs::al;
+		case ZYDIS_REGISTER_AX:
+			return x86::regs::ax;
+		case ZYDIS_REGISTER_AH:
+			return x86::regs::ah;
+		case ZYDIS_REGISTER_BX:
+			return x86::regs::bx;
+		case ZYDIS_REGISTER_BL:
+			return x86::regs::bl;
+		case ZYDIS_REGISTER_BH:
+			return x86::regs::bh;
+		case ZYDIS_REGISTER_CX:
+			return x86::regs::cx;
+		case ZYDIS_REGISTER_CH:
+			return x86::regs::ch;
+		case ZYDIS_REGISTER_CL:
+			return x86::regs::cl;
+		case ZYDIS_REGISTER_DX:
+			return x86::regs::dx;
+		case ZYDIS_REGISTER_DH:
+			return x86::regs::dh;
+		case ZYDIS_REGISTER_SI:
+			return x86::regs::si;
+		case ZYDIS_REGISTER_DI:
+			return x86::regs::di;
+		case ZYDIS_REGISTER_DIL:
+			return x86::regs::dil;
+		case ZYDIS_REGISTER_DL:
+			return x86::regs::dl;
+		case ZYDIS_REGISTER_SP:
+			return x86::regs::sp;
+		case ZYDIS_REGISTER_BP:
+			return x86::regs::bp;
+		case ZYDIS_REGISTER_BPL:
+			return x86::regs::bpl;
+		case ZYDIS_REGISTER_SPL:
+			return x86::regs::spl;
+		case ZYDIS_REGISTER_SIL:
+			return x86::regs::sil;
+		default:
+			throw "unknown";
+		}
+	}
+}

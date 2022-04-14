@@ -1,0 +1,15 @@
+[submodule "vendor/spdlog"]
+	path = vendor/spdlog
+	url = https://github.com/gabime/spdlog
+[submodule "vendor/asmjit"]
+	path = vendor/asmjit
+	url = https://github.com/asmjit/asmjit
+[submodule "vendor/argparse"]
+	path = vendor/argparse
+	url = https://github.com/p-ranav/argparse
+[submodule "vendor/pepp"]
+	path = vendor/pepp
+	url = https://github.com/mike1k/pepp
+[submodule "vendor/zydis"]
+	path = vendor/zydis
+	url = https://github.com/zyantific/zydis.git

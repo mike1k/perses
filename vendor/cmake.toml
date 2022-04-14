@@ -1,0 +1,17 @@
+[subdir.spdlog]
+[subdir.zydis]
+
+[target.asmjit]
+type = "interface"
+include-directories = ["asmjit/src"]
+sources = ["asmjit/src/asmjit/*.h", "asmjit/src/asmjit/*.cpp", "asmjit/src/asmjit/core/*.h", "asmjit/src/asmjit/core/*.cpp", "asmjit/src/asmjit/x86/*.h", "asmjit/src/asmjit/x86/*.cpp"]
+compile-definitions = ["ASMJIT_STATIC", "ASMJIT_NO_AARCH32", "ASMJIT_NO_AARCH64"]
+
+[target.argparse]
+type = "interface"
+include-directories = ["argparse/include"]
+
+[target.pepp]
+type = "interface"
+include-directories = ["pepp"]
+sources = ["pepp/pepp/**.hpp", "pepp/pepp/**.cpp"]
