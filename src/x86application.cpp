@@ -37,11 +37,14 @@ X86BA_TEMPLATE void X86BinaryApplication<BitSize>::loadFromFile(std::string_view
 
 	_originalRelocs.clear();
 
-	_peFile.getRelocDir().forEachEntry(
-		[this](pe::BlockEntry const& entry)
-		{
-			_originalRelocs.insert(entry.getRva());
-		});
+	if (_peFile.getRelocDir().isPresent())
+	{
+		_peFile.getRelocDir().forEachEntry(
+			[this](pe::BlockEntry const& entry)
+			{
+				_originalRelocs.insert(entry.getRva());
+			});
+	}
 
 	// printf("* - Number of relocations: 0x%x\n", _originalRelocs.size());
 }
@@ -714,7 +717,10 @@ X86BA_TEMPLATE bool X86BinaryApplication<BitSize>::transformRoutines()
 	}
 
 	// Guesstimate.. Fix this..
-	_peFile.getRelocDir().extend(((_routines.size() + 0x3) & ~0x3) * 0x100);
+	if (_peFile.getRelocDir().isPresent()) 
+	{
+		_peFile.getRelocDir().extend(((_routines.size() + 0x3) & ~0x3) * 0x100);
+	}
 
 	for (auto& rtn : _routines)
 	{
@@ -856,36 +862,39 @@ X86BA_TEMPLATE void X86BinaryApplication<BitSize>::compile()
 	
 	//
 	// Append all relocations
-	for (auto it = _relocBlocks.begin(); it != _relocBlocks.end(); ++it)
+	if (_peFile.getRelocDir().isPresent()) 
 	{
-		u32 rva = it->first;
-		std::vector<RelocationEntry> const &entries = it->second;
-
-		if (entries.empty())
-			continue;
-
-		// Pad the amount of relocs to ensure 32bit alignment
-		size_t relocEntrySize = (entries.size() + 0x3) & ~0x3;
-		size_t numHandled = 0ull;
-
-		// Create the BlockStream and add all relocatables.
-		pe::BlockStream bs = _peFile.getRelocDir().createBlock(rva, relocEntrySize);
-
-		if (!bs.valid())
-			continue;
-
-		// printf("relocEntrySize: 0x%llx entries\n", relocEntrySize);
-
-		for (auto& entry : entries)
+		for (auto it = _relocBlocks.begin(); it != _relocBlocks.end(); ++it)
 		{
-			bs.append(entry.type, entry.offset);
-			++numHandled;
-		}
+			u32 rva = it->first;
+			std::vector<RelocationEntry> const& entries = it->second;
 
-		// Pad.
-		for (size_t handled = numHandled; handled < relocEntrySize; ++handled)
-		{
-			bs.append(pe::RelocationType::REL_BASED_ABSOLUTE, 0);
+			if (entries.empty())
+				continue;
+
+			// Pad the amount of relocs to ensure 32bit alignment
+			size_t relocEntrySize = (entries.size() + 0x3) & ~0x3;
+			size_t numHandled = 0ull;
+
+			// Create the BlockStream and add all relocatables.
+			pe::BlockStream bs = _peFile.getRelocDir().createBlock(rva, relocEntrySize);
+
+			if (!bs.valid())
+				continue;
+
+			// printf("relocEntrySize: 0x%llx entries\n", relocEntrySize);
+
+			for (auto& entry : entries)
+			{
+				bs.append(entry.type, entry.offset);
+				++numHandled;
+			}
+
+			// Pad.
+			for (size_t handled = numHandled; handled < relocEntrySize; ++handled)
+			{
+				bs.append(pe::RelocationType::REL_BASED_ABSOLUTE, 0);
+			}
 		}
 	}
 
