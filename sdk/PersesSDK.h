@@ -5,18 +5,18 @@
 
 #define PERSES_MUTATION_START() \
 {\
-	__nop();\
-	__nop();\
 	__debugbreak();\
 	__debugbreak();\
+	__nop();\
+	__nop();\
 	_disable();\
 }
 
 #define PERSES_MUTATION_END() \
 {\
 	_enable();\
-	__debugbreak();\
-	__debugbreak();\
 	__nop();\
 	__nop();\
+	__debugbreak();\
+	__debugbreak();\
 }
