@@ -19,7 +19,6 @@ PERSES by default works off a command line. Listed below are the arguments requr
 | `-s` or `--symbol` 	| Symbol or list of symbols to be mutated. This requires a linked `.map` file.                                                                                              	| :x:                	|
 | `--map`            	| Map file to be linked. IDA Pro `.map` files must have their extension replaced with `.ida`.                                                                               	| :x:                	|
 | `--list`           	| List of functions to be mutated. Each entry must envelop one line and be formatted as `0x1000:0x2000` where `0x1000` is the start and `0x2000` is the end of the routine. 	| :x:                	|
-| `--x64`            	| Used to indicate that the file is of 64bit architecture (AMD64).                                                                                                          	| :heavy_check_mark: 	|
 | `--rets`           	| Allow PERSES to build a `RET` gadget pool used to create `JMP`s to random locations.                                                                                      	| :x:                	|
 | `--scan`           	| Force PERSES to scan for code protection markers.                                                                                                                         	| :x:                	|
 

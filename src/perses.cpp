@@ -1,6 +1,7 @@
 ﻿#include "perses.hpp"
 #include <argparse/argparse.hpp>
 
+
 template<int BitSize>
 void createApplication(perses::X86BinaryApplication<BitSize>* app, argparse::ArgumentParser& args)
 {
@@ -101,10 +102,6 @@ int main(int argc, char* argv[])
 	args.add_argument("-f", "--file")
 		.help("Input file path.")
 		.required();
-	args.add_argument("-x64")
-		.help("Required for X64 PE files.")
-		.default_value(false)
-		.implicit_value(true);
 	args.add_argument("-a", "--address")
 		.help("Address(es) to mutate")
 		.remaining();
@@ -145,10 +142,19 @@ int main(int argc, char* argv[])
 	if (!std::filesystem::exists(filepath))
 	{
 		logger()->critical("Unable to find file: {}.", filepath);
-		return 0;
+		return 1;
 	}
 
-	if (args.get<bool>("-x64"))
+	// Determine arch. type automatically.
+	DWORD type = 0ul;
+
+	if (!GetBinaryTypeA(filepath.c_str(), &type) && GetLastError() != ERROR_BAD_EXE_FORMAT)
+	{
+		logger()->critical("Are you sure this is a executable file?");
+		return 1;
+	}
+
+	if (type == SCS_64BIT_BINARY)
 	{
 		createApplication(new perses::X86BinaryApplication<PERSES_64BIT>(filepath), args);
 	}
