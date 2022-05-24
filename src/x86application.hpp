@@ -22,7 +22,7 @@ namespace perses
 		void removeRelocation(u32 rva);
 		void dumpRoutines();
 		void linkCode(Routine* origRtn, assembler::CodeHolder& code, const std::vector<RelocationEntry>& relocs, const std::vector<JumpTableEntry>& jumpTable);
-		void compile();
+		void compile(std::string_view sectionName = ".perses");
 		bool linkMapFile(MapFileType type, std::filesystem::path filePath);
 		bool hasMapFile() const;
 		bool inquireJumpTable(instruction_t* insn, uptr begin, uptr end, int entryCount, std::vector<JumpTableEntry>& entries);
