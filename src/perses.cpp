@@ -12,6 +12,11 @@ void createApplication(perses::X86BinaryApplication<BitSize>* app, argparse::Arg
 	if (args.is_used("--rets"))
 		perses::buildKnownRetGadgets(app);
 
+	std::string_view sectionName = ".perses";
+
+	if (auto param = args.present<std::string>("--section-name"))
+		sectionName = *param;
+
 	if (auto param = args.present<std::string>("--map"))
 	{
 		std::filesystem::path path = *param;
@@ -77,7 +82,7 @@ void createApplication(perses::X86BinaryApplication<BitSize>* app, argparse::Arg
 	}
 
 	app->transformRoutines();
-	app->compile();
+	app->compile(sectionName);
 
 	logger()->info("Mutated {} routines.", app->getRoutines().size());
 
@@ -112,6 +117,8 @@ int main(int argc, char* argv[])
 		.help("Parsable function list (NOTE: all entries in the list will be added).");
 	args.add_argument("--map")
 		.help("Parsable map file (NOTE: IDA Pro .MAP files must have their extension named as \".ida\").");
+	args.add_argument("--section-name")
+		.help("Section name.");
 	args.add_argument("--rets")
 		.help("Use RET gadgets.")
 		.default_value(false)

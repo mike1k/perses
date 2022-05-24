@@ -853,7 +853,7 @@ X86BA_TEMPLATE void X86BinaryApplication<BitSize>::linkCode(Routine* origRtn, as
 
 }
 
-X86BA_TEMPLATE void X86BinaryApplication<BitSize>::compile()
+X86BA_TEMPLATE void X86BinaryApplication<BitSize>::compile(std::string_view sectionName)
 {
 	uptr imageBase = _peFile.getImageBase();
 
@@ -921,9 +921,9 @@ X86BA_TEMPLATE void X86BinaryApplication<BitSize>::compile()
 		}
 	}
 
-	pe::SectionHeader& hdr = _peFile.getSectionHdr(".perses");
+	pe::SectionHeader& hdr = _peFile.getSectionHdr(sectionName);
 
-	_peFile.appendSection(".perses", _currentSectionOffset + 0x1000,
+	_peFile.appendSection(sectionName, _currentSectionOffset + 0x1000,
 		pe::SectionCharacteristics::SCN_MEM_READ | pe::SectionCharacteristics::SCN_MEM_EXECUTE | pepp::SectionCharacteristics::SCN_CNT_CODE, &hdr);
 
 	for (auto it = _proutines.begin(); it != _proutines.end(); ++it)
